@@ -1,0 +1,86 @@
+sell_all()
+
+number		売上伝票番号(ID)
+i_name		商品名
+sales_num	販売個数
+s_price		販売価格
+c_name		購入者氏名
+date		売上日付
+
+
+table_customer(顧客管理)
+id,name,age,sex
+
+table_iteme(商品一覧)
+id,name,price,stock
+
+table_sales(売れた商品の数)
+number,iteme_id,sales,c_id,date
+売れ番号,商品の番号,数,顧客の番号,日にち
+
+table_stocking(仕入れ商品)
+number,item_id,arrial,date
+↓
+↓
+↓
+↓
+↓
+↓
+・table_customer(顧客管理)
+id,
+name,
+age,
+sex
+
+・table_iteme(商品一覧)
+id,product_name(商品名),
+list_price(定価),
+add_date(更新日付)
+
+・table_sales(売れた商品の数)
+id,
+id_stocking(仕入れのid),
+iteme_id(商品id),
+c_id(顧客id),
+number(個数),
+date(更新日)
+売れ番号,商品の番号,数,顧客の番号,日にち
+
+・table_stocking(仕入れ商品)
+id,
+item_id,
+cost_price(原価),
+number(個数),
+add_date(日付)
+
+・テーブル
+id,
+id_stocking,
+count_number(個数カウント),
+
+
+先入先出法
+①select id,name,list_price,add_date from table_time;
+
+②select id,name,age,sex from table_customer;
+
+③select a.id,b.name,c.product_name,c.list_price,a.number,a.date       
+	from  table_sales a, table_customer b,table_iteme c;
+	
+④select a.id,b.product_name,a.cost_price,a.number,a.add_date
+    from table_stocking a,table_iteme b;
+
+⑤select (出てくる順位番号フル) as slip_id,(日付),
+          a.add_date,sum(b.list_price * a.number)as earnings,
+          sum(b.list_price * a.number)-sum(c.cost_price* a.number)as profit
+  from table_sales a,table_iteme b,table_stocking c
+  ODER BY １日分
+
+
+
+
+
+
+
+
+select id,table_customer.name,table_iteme.product_name,table_iteme.list_price,earnings,date from table_sales INNER JOIN table_sales ON table_iteme.id = iteme_id
